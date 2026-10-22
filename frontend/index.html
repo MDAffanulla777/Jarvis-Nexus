@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>JARVIS Nexus</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            color: #edf4ff;
+            background:
+                radial-gradient(circle at top, #153b69, transparent 45%),
+                #070d19;
+        }
+
+        header {
+            padding: 24px 8%;
+            border-bottom: 1px solid #24334b;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .logo span {
+            color: #53d8ff;
+        }
+
+        .status {
+            color: #71f5bd;
+            font-size: 13px;
+        }
+
+        main {
+            width: min(1000px, 90%);
+            margin: 45px auto;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .orb {
+            width: 115px;
+            height: 115px;
+            margin: 25px auto;
+            border-radius: 50%;
+            border: 2px solid #54dcff;
+            box-shadow:
+                0 0 25px #168bdc,
+                inset 0 0 25px #168bdc;
+            display: grid;
+            place-items: center;
+            font-size: 40px;
+        }
+
+        h1 {
+            font-size: clamp(30px, 5vw, 48px);
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #a5bad6;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+        }
+
+#chatPanel {
+width: 100%;
+margin-top: 24px;
+display: block;
+}
+
+#chatMessages {
+width: 100%;
+min-height: 200px;
+}
+
+#chatForm {
+display: flex;
+align-items: center;
+gap: 10px;
+width: 100%;
+}
+
+#chatInput {
+flex: 1;
+width: 0;
+min-width: 0;
+margin: 0;
+box-sizing: border-box;
+}
+
+#chatSendButton {
+width: auto;
+min-width: 90px;
+margin: 0;
+flex-shrink: 0;
+}
+
+#chatStatus {
+color: #71f5bd;
+}
+
+        .card {
+            padding: 24px;
+            border: 1px solid #263b59;
+            border-radius: 18px;
+            background: rgba(16, 28, 48, 0.9);
+        }
+
+        input {
+            width: 100%;
+            padding: 13px;
+            margin: 8px 0;
+            border-radius: 8px;
+            border: 1px solid #334969;
+            background: #0a1425;
+            color: white;
+        }
+
+        button {
+            width: 100%;
+            padding: 13px;
+            margin-top: 8px;
+            border: 0;
+            border-radius: 8px;
+            background: #43c9ff;
+            color: #06101d;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #8ce4ff;
+        }
+
+        li {
+            margin: 12px 0;
+            color: #d1e0f5;
+        }
+
+        #message {
+            margin-top: 20px;
+            color: #71f5bd;
+            text-align: center;
+        }
+
+        footer {
+            text-align: center;
+            color: #8195b0;
+            padding: 30px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">JARVIS <span>NEXUS</span></div>
+        <div class="status" id="status">● Connecting...</div>
+    </header>
+
+    <main>
+
+        <section class="hero">
+            <div class="orb">✦</div>
+
+            <h1>Your Personal AI Action Assistant</h1>
+
+            <p class="subtitle">
+                Intelligence, tasks and reminders in one place.
+            </p>
+        </section>
+
+        <section class="grid">
+
+            <div class="card">
+                <h2>✓ Task Manager</h2>
+
+                <input
+                    id="taskInput"
+                    placeholder="What do you need to do?"
+                >
+
+                <button onclick="addTask()">Add Task</button>
+
+                <ul id="taskList"></ul>
+            </div>
+
+            <div class="card">
+                <h2>◷ Reminders</h2>
+
+                <input
+                    id="reminderTitle"
+                    placeholder="Reminder title"
+                >
+
+                <input
+                    id="reminderTime"
+                    type="datetime-local"
+                >
+
+                <button onclick="addReminder()">Save Reminder</button>
+
+                <ul id="reminderList"></ul>
+            </div>
+
+        </section>
+
+        <p id="message"></p>
+
+        ```
+    <p id="message"></p>
+
+    <!-- JARVIS AI Chat Panel -->
+    <section class="card" id="chatPanel">
+        <h2>🤖 Talk to JARVIS</h2>
+        <p>Your personal AI assistant, powered by Llama 3.</p>
+
+        <div id="chatMessages" style="
+            height: 280px;
+            overflow-y: auto;
+            padding: 12px;
+            margin: 15px 0;
+            border: 1px solid #334155;
+            border-radius: 10px;
+            background: #0f172a;
+        ">
+            <p><strong>JARVIS:</strong> Hello, sir! How can I help you?</p>
+        </div>
+
+        <form id="chatForm" style="display: flex; gap: 10px;">
+            <input
+                type="text"
+                id="chatInput"
+                placeholder="Ask JARVIS anything..."
+                autocomplete="off"
+                required
+                style="
+                    flex: 1;
+                    min-width: 0;
+                    padding: 12px;
+                    border-radius: 8px;
+                    border: 1px solid #475569;
+                    background: #1e293b;
+                    color: white;
+                "
+            >
+
+            <button type="submit" id="chatSendButton">
+                Send
+            </button>
+        </form>
+
+        <p id="chatStatus" aria-live="polite"></p>
+    </section>
+
+</main>
+
+<footer>
+    JARVIS Nexus · AI-powered productivity
+</footer>
+
+
+```
+
+</body>
+</html>
+
+    </main>
+
+    <footer>
+        JARVIS Nexus · AI-powered productivity
+    </footer>
+
+    <script src="/static/script.js"></script>
+
+</body>
+</html>
